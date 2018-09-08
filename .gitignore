@@ -1,2 +1,3 @@
 *.jar
 .gradle/
+*.DS_Store

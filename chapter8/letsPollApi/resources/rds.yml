@@ -1,0 +1,45 @@
+  #letsPollRDSDatabase:
+  #  Type: AWS::RDS::DBInstance
+  #  Properties:
+  #    DBInstanceClass: db.t2.micro
+      #DBInstanceIdentifier: String
+    #DBName: letsPoll
+    #DBSubnetGroupName:
+    #  Ref: letsPollPrivateSubnet1
+    #Engine: postgres
+    #EngineVersion: 9.4
+    #MasterUsername: letsPollMasterDB
+    #MasterUserPassword: Test12345A
+    #MultiAZ: false
+    #Port: 5432
+    #PubliclyAccessible: false
+    #SourceRegion: ap-south-1
+    #VPCSecurityGroups:
+    #  Ref: databaseSecurityGroup
+  Resources:
+    letsPollDBSubnetGroup:
+      Type: AWS::RDS::DBSubnetGroup
+      Properties:
+        DBSubnetGroupDescription: "RDS Subnet Group"
+        SubnetIds:
+        - Ref: letsPollPrivateSubnet1
+        - Ref: letsPollPrivateSubnet2
+    letsPollDatabase:
+      Type: "AWS::RDS::DBInstance"
+      Properties:
+        DBName: ${self:provider.stage}-lets-poll
+        AllocatedStorage: 5
+        DBInstanceClass: "db.t2.micro"
+        Engine: "postgres"
+        EngineVersion: "9.5.4"
+        MasterUsername: "example"
+        MasterUserPassword: "serverless"
+        VPCSecurityGroups:
+          - "Fn::GetAtt": databaseSecurityGroup.GroupId
+        DBSubnetGroupName:
+          Ref: letsPollDBSubnetGroup
+        Tags:
+          -
+            Key: "Name"
+            Value: "forum_example"
+      DeletionPolicy: "Snapshot"
