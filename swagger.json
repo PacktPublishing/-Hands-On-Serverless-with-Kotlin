@@ -1,0 +1,467 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0.0",
+		"title": "Lets Poll"
+	},
+	"host": "cxnzr4hm12.execute-api.us-west-1.amazonaws.com",
+	"basePath": "/test",
+	"schemes": [
+		"https"
+	],
+	"paths": {
+		"/polls": {
+			"get": {
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "200 response",
+						"schema": {
+							"$ref": "#/definitions/Polls"
+						}
+					}
+				},
+				"x-amazon-apigateway-integration": {
+					"uri": "arn:aws:apigateway:us-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:uswest-1:162507129690:function:PollsGetter/invocations",
+					"responses": {
+						"default": {
+							"statusCode": "200"
+						}
+					},
+					"passthroughBehavior": "when_no_match",
+					"httpMethod": "POST",
+					"contentHandling": "CONVERT_TO_TEXT",
+					"type": "aws"
+				}
+			},
+			"post": {
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [{
+					"in": "body",
+					"name": "PollCreationRequest",
+					"description": "body object",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/PollCreationRequest"
+					}
+				}],
+				"responses": {
+					"200": {
+						"description": "200 response",
+						"schema": {
+							"$ref": "#/definitions/PollCreationResponse"
+						}
+					}
+				},
+				"x-amazon-apigateway-integration": {
+					"uri": "arn:aws:apigateway:uswest-1:lambda:path/2015-03-31/functions/arn:aws:lambda:uswest-1:162507129690:function:PollCreator/invocations",
+					"responses": {
+						"default": {
+							"statusCode": "200"
+						}
+					},
+					"passthroughBehavior": "when_no_match",
+					"httpMethod": "POST",
+					"contentHandling": "CONVERT_TO_TEXT",
+					"type": "aws"
+				}
+			}
+		},
+		"/polls/{pollId}": {
+			"get": {
+				"produces": [
+					"application/json"
+				],
+				"parameters": [{
+					"name": "pollId",
+					"in": "path",
+					"required": true,
+					"type": "string"
+				}],
+				"responses": {
+					"200": {
+						"description": "200 response",
+						"schema": {
+							"$ref": "#/definitions/Poll"
+						}
+					}
+				},
+				"x-amazon-apigateway-integration": {
+					"uri": "arn:aws:apigateway:uswest-1:lambda:path/2015-03-31/functions/arn:aws:lambda:uswest-1:162507129690:function:PollGetter/invocations",
+					"responses": {
+						"default": {
+							"statusCode": "200"
+						}
+					},
+					"passthroughBehavior": "when_no_match",
+					"httpMethod": "POST",
+					"contentHandling": "CONVERT_TO_TEXT",
+					"type": "aws"
+				}
+			},
+			"post": {
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [{
+						"name": "pollId",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "PollResponseRequest",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/PollResponseRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "200 response",
+						"schema": {
+							"$ref": "#/definitions/PollResponseResponse"
+						}
+					}
+				},
+				"x-amazon-apigateway-integration": {
+					"uri": "arn:aws:apigateway:uswest-1:lambda:path/2015-03-31/functions/arn:aws:lambda:uswest-1:162507129690:function:PollResponder/invocations",
+					"responses": {
+						"default": {
+							"statusCode": "200"
+						}
+					},
+					"passthroughBehavior": "when_no_match",
+					"httpMethod": "POST",
+					"contentHandling": "CONVERT_TO_TEXT",
+					"type": "aws"
+				}
+			},
+			"delete": {
+				"produces": [
+					"application/json"
+				],
+				"parameters": [{
+					"name": "pollId",
+					"in": "path",
+					"required": true,
+					"type": "string"
+				}],
+				"responses": {},
+				"x-amazon-apigateway-integration": {
+					"uri": "arn:aws:apigateway:uswest-1:lambda:path/2015-03-31/functions/arn:aws:lambda:uswest-1:162507129690:function:PollDeletor/invocations",
+					"responses": {
+						"default": {
+							"statusCode": "200"
+						}
+					},
+					"passthroughBehavior": "when_no_match",
+					"httpMethod": "POST",
+					"contentHandling": "CONVERT_TO_TEXT",
+					"type": "aws"
+				}
+			}
+		},
+		"/polls/{pollId}/responses": {
+			"get": {
+				"produces": [
+					"application/json"
+				],
+				"parameters": [{
+					"name": "pollId",
+					"in": "path",
+					"required": true,
+					"type": "string"
+				}],
+				"responses": {
+					"200": {
+						"description": "200 response",
+						"schema": {
+							"$ref": "#/definitions/PollResponsesResultResponse"
+						}
+					}
+				},
+				"x-amazon-apigateway-integration": {
+					"uri": "arn:aws:apigateway:uswest-1:lambda:path/2015-03-31/functions/arn:aws:lambda:uswest-1:162507129690:function:PollResultsGetter/invocations",
+					"responses": {
+						"default": {
+							"statusCode": "200"
+						}
+					},
+					"passthroughBehavior": "when_no_match",
+					"httpMethod": "POST",
+					"contentHandling": "CONVERT_TO_TEXT",
+					"type": "aws"
+				}
+			}
+		},
+		"/respondent": {
+			"post": {
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [{
+					"in": "body",
+					"name": "RespondentRegisterationRequest",
+					"description": "body object",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/RespondentRegisterationRequest"
+					}
+				}],
+				"responses": {
+					"201": {
+						"description": "Respondent created",
+						"headers": {
+							"Location": {
+								"type": "string",
+								"description": "links to the newly registered respondent"
+							}
+						}
+					}
+				},
+				"x-amazon-apigateway-integration": {
+					"uri": "arn:aws:apigateway:uswest-1:lambda:path/2015-03-31/functions/arn:aws:lambda:uswest-1:162507129690:function:RespondentRegisterer/invocations",
+					"responses": {
+						"default": {
+							"statusCode": "200"
+						}
+					},
+					"passthroughBehavior": "when_no_match",
+					"httpMethod": "POST",
+					"contentHandling": "CONVERT_TO_TEXT",
+					"type": "aws"
+				}
+			}
+		}
+	},
+	"definitions": {
+		"PollResponseResponse": {
+			"type": "object",
+			"properties": {
+				"pollQuestion": {
+					"type": "string"
+				},
+				"respondentsReponse": {
+					"type": "string"
+				}
+			}
+		},
+		"PollCreationResponse": {
+			"type": "object",
+			"properties": {
+				"polls": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Poll"
+					}
+				}
+			}
+		},
+		"PollResponseRequest": {
+			"type": "object",
+			"required": [
+				"polLResponse",
+				"pollId",
+				"respondentId"
+			],
+			"properties": {
+				"pollId": {
+					"type": "string"
+				},
+				"polLResponse": {
+					"type": "string"
+				},
+				"respondentId": {
+					"type": "string"
+				}
+			}
+		},
+		"PollResponseStatistics": {
+			"type": "object",
+			"properties": {
+				"response": {
+					"type": "string"
+				},
+				"count": {
+					"type": "integer"
+				},
+				"percentage": {
+					"type": "number"
+				}
+			}
+		},
+		"Poll": {
+			"type": "object",
+			"required": [
+				"pollOptions",
+				"pollQuestion",
+				"pollTitle"
+			],
+			"properties": {
+				"pollId": {
+					"type": "string"
+				},
+				"pollTitle": {
+					"type": "string"
+				},
+				"pollQuestion": {
+					"type": "string"
+				},
+				"pollOptions": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"PollCreationRequest": {
+			"type": "object",
+			"required": [
+				"pollOptions",
+				"pollQuestion",
+				"pollTitle"
+			],
+			"properties": {
+				"pollTitle": {
+					"type": "string"
+				},
+				"pollQuestion": {
+					"type": "string"
+				},
+				"pollOptions": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"RespondentRegisterationRequest": {
+			"type": "object",
+			"properties": {
+				"congitoToken": {
+					"type": "string"
+				}
+			}
+		},
+		"PollResponsesResultResponse": {
+			"type": "object",
+			"properties": {
+				"pollId": {
+					"type": "string"
+				},
+				"pollTitle": {
+					"type": "string"
+				},
+				"pollQuestion": {
+					"type": "string"
+				},
+				"responses": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/PollResponseStatistics"
+					}
+				}
+			}
+		},
+		"Polls": {
+			"type": "object",
+			"properties": {
+				"polls": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Poll"
+					}
+				}
+			}
+		}
+	},
+	"x-amazon-apigateway-documentation": {
+		"version": "2",
+		"createdDate": "2018-07-21T13:32:14Z",
+		"documentationParts": [{
+				"location": {
+					"type": "REQUEST_BODY",
+					"path": "/polls",
+					"method": "POST"
+				},
+				"properties": {
+					"description": "body object"
+				}
+			},
+			{
+				"location": {
+					"type": "REQUEST_BODY",
+					"path": "/respondent",
+					"method": "POST"
+				},
+				"properties": {
+					"description": "body object"
+				}
+			},
+			{
+				"location": {
+					"type": "RESPONSE",
+					"path": "/polls",
+					"method": "POST",
+					"statusCode": "201"
+				},
+				"properties": {
+					"description": "Poll created"
+				}
+			},
+			{
+				"location": {
+					"type": "RESPONSE",
+					"path": "/respondent",
+					"method": "POST",
+					"statusCode": "201"
+				},
+				"properties": {
+					"description": "Respondent created"
+				}
+			},
+			{
+				"location": {
+					"type": "RESPONSE_HEADER",
+					"path": "/polls",
+					"method": "POST",
+					"statusCode": "201",
+					"name": "Location"
+				},
+				"properties": {
+					"description": "links to the newly created Poll"
+				}
+			},
+			{
+				"location": {
+					"type": "RESPONSE_HEADER",
+					"path": "/respondent",
+					"method": "POST",
+					"statusCode": "201",
+					"name": "Location"
+				},
+				"properties": {
+					"description": "links to the newly registered respondent"
+				}
+			}
+		]
+	}
+}
