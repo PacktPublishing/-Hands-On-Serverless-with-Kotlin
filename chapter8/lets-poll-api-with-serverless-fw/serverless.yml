@@ -51,10 +51,11 @@ package:
   artifact: build/libs/lets-poll-1.0.0.jar
 
 functions:
-#- ${file(./resources/functions/pollsGetter.yml)}
+ - ${file(./resources/functions/pollsGetter.yml)}
 #- ${file(./resources/functions/pollCreator.yml)}
 #- ${file(./resources/functions/pollGetter.yml)}
 #- ${file(./resources/functions/respondentRegistrer.yml)}
 #- ${file(./resources/functions/pollResponder.yml)}
 #- ${file(./resources/functions/pollDeletor.yml)}
  - ${file(./resources/functions/databaseMigrator.yml)}
+ - ${file(./resources/functions/databaseMigratorFixer.yml)}
