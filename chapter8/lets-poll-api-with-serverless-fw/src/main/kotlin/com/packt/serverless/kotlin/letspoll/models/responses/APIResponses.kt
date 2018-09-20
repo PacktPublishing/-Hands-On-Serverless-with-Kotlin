@@ -1,7 +1,7 @@
 package com.packt.serverless.kotlin.letspoll.models.responses
 
 import com.packt.serverless.kotlin.letspoll.Response
-import com.packt.serverless.kotlin.letspoll.models.generated.tables.pojos.Poll
+import com.packt.serverless.kotlin.letspoll.models.domain.Poll
 
 
 data class PollDetailsResponse(val poll: Poll, val createdBy: RespondentDetails, val statistics: List<PollResponseStatistics>) : Response()

@@ -1,5 +1,5 @@
   pollCreator:
-    handler: com.serverless.letspoll.handlers.PollCreator
+    handler: com.packt.serverless.kotlin.letspoll.handlers.PollCreator
     environment:
       databaseUsername: ${env:LP_DATABASE_USERNAME}
       databasePassword: ${env:LP_DATABASE_PASSWORD}
