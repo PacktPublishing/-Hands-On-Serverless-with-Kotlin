@@ -26,11 +26,9 @@ class RespondentRegistrer : RequestHandler<Map<String, Any>, ApiGatewayResponse>
 
     override  fun handleRequest(input: Map<String, Any>, context: Context): ApiGatewayResponse {
         val mapper = ObjectMapper().registerKotlinModule()
-        val req = input["body"] as String
-        LOG.info("request is $req")
         val respondentRegisterationRequest: RespondentRegisterationRequest
         try {
-            respondentRegisterationRequest  = mapper.readValue<RespondentRegisterationRequest>(req)
+            respondentRegisterationRequest  = mapper.readValue<RespondentRegisterationRequest>(input["body"] as String)
         } catch (e: IOException) {
             LOG.error("error occured parsing the body",e.printStackTrace())
             return ApiGatewayResponse.build {
