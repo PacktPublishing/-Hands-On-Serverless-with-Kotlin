@@ -52,10 +52,10 @@ package:
   artifact: build/distributions/letsPollAPI.zip
 
 functions:
-- ${file(./resources/functions/pollsGetter.yml)}
-- ${file(./resources/functions/pollCreator.yml)}
-- ${file(./resources/functions/pollGetter.yml)}
-- ${file(./resources/functions/respondentRegistrer.yml)}
-- ${file(./resources/functions/pollResponder.yml)}
-- ${file(./resources/functions/pollDeletor.yml)}
+#- ${file(./resources/functions/pollsGetter.yml)}
+#- ${file(./resources/functions/pollCreator.yml)}
+#- ${file(./resources/functions/pollGetter.yml)}
+#- ${file(./resources/functions/respondentRegistrer.yml)}
+#- ${file(./resources/functions/pollResponder.yml)}
+#- ${file(./resources/functions/pollDeletor.yml)}
 - ${file(./resources/functions/databaseMigrator.yml)}
