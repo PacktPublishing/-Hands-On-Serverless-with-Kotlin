@@ -1,5 +1,5 @@
   pollDeletor:
-    handler: com.serverless.letspoll.handlers.PollDeletor
+    handler: com.packt.serverless.kotlin.letspoll.handlers.PollDeletor
     environment:
       databaseUsername: ${env:LP_DATABASE_USERNAME}
       databasePassword: ${env:LP_DATABASE_PASSWORD}

@@ -56,6 +56,6 @@ functions:
  - ${file(./resources/functions/pollGetter.yml)}
  - ${file(./resources/functions/respondentRegistrer.yml)}
  - ${file(./resources/functions/pollResponder.yml)}
-#- ${file(./resources/functions/pollDeletor.yml)}
+ - ${file(./resources/functions/pollDeletor.yml)}
  - ${file(./resources/functions/databaseMigrator.yml)}
  - ${file(./resources/functions/databaseMigratorFixer.yml)}
