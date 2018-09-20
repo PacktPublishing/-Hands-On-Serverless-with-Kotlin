@@ -2,8 +2,8 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'idea'
 
-group = 'org.example.greeter'
-version = '1.0.0'
+group = 'org.example'
+version = 'dev'
 
 description = """secure-greeter-service"""
 
@@ -36,13 +36,6 @@ repositories {
   maven { url "http://repo.maven.apache.org/maven2" }
 }
 
-// If requiring AWS JDK, uncomment the dependencyManagement to use the bill of materials
-//   https://aws.amazon.com/blogs/developer/managing-dependencies-with-aws-sdk-for-java-bill-of-materials-module-bom/
-//dependencyManagement {
-//    imports {
-//        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.206'
-//    }
-//}
 
 dependencies {
   compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.1.51'
@@ -50,12 +43,13 @@ dependencies {
   compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version:'1.1.0'
   compile group: 'com.amazonaws', name: 'aws-lambda-java-log4j2', version:'1.0.0'
   compile group: 'com.amazonaws', name: 'aws-lambda-java-events', version:'2.0.1'
+  compile group: 'com.amazonaws', name: 'aws-java-sdk-kms', version: '1.11.397'
 
   compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.8.5'
   compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.8.5'
   compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.8.5'
+  compile 'org.jooq:jooq:3.8.2'
+  compile 'org.jooq:jooq-meta:3.8.2'
+  runtime group: 'org.postgresql', name: 'postgresql', version: '9.4-1201-jdbc41'
 }
 
-task deploy(type: Exec, dependsOn: 'shadowJar') {
-  commandLine 'serverless', 'deploy'
-}
