@@ -1,26 +1,16 @@
 package org.example.greeter
 
-import com.amazonaws.services.lambda.runtime.Context
-import com.amazonaws.services.lambda.runtime.LambdaLogger
-import com.amazonaws.services.lambda.runtime.RequestHandler
-import org.jooq.DSLContext
-import org.jooq.Record
-import org.jooq.Result
-import org.jooq.SQLDialect
-import org.jooq.impl.DSL
-
-import java.sql.Connection
-import java.sql.DriverManager
-import java.sql.Timestamp
-import java.util.Date
-
-import com.amazonaws.services.kms.AWSKMS
 import com.amazonaws.services.kms.AWSKMSClientBuilder
 import com.amazonaws.services.kms.model.DecryptRequest
+import com.amazonaws.services.lambda.runtime.Context
+import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.util.Base64
-
+import org.jooq.SQLDialect
+import org.jooq.impl.DSL
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
+import java.sql.DriverManager
+import java.util.*
 
 class Greeter : RequestHandler<String, String> {
 
@@ -61,7 +51,6 @@ class Greeter : RequestHandler<String, String> {
     }
 
     private fun decryptKey(environmentKeyName: String): String {
-    return System.getenv(environmentKeyName)
         val encryptedKey = Base64.decode(System.getenv(environmentKeyName))
 
         val client = AWSKMSClientBuilder.defaultClient()
