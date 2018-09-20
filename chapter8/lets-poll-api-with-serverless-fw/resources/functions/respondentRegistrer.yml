@@ -1,0 +1,25 @@
+  respondentRegistrer:
+    handler: com.serverless.letspoll.handlers.RespondentRegistrar
+    environment:
+      databaseUsername: ${env:LP_DATABASE_USERNAME}
+      databasePassword: ${env:LP_DATABASE_PASSWORD}
+      #databaseUrl: { Fn::GetAtt: [ "letsPollDatabase", "Endpoint.Address" ] }
+      databaseUrl: ${env:LP_DATABASE_URL}
+      databasePort: ${env:LP_DATABASE_PORT}
+      databaseName: ${env:LP_DATABASE_NAME}
+    events:
+      - http:
+          path: /respondent/
+          method: POST
+          cors: true
+          documentation:
+            summary: Registers a respondent
+            requestBody:
+              description: "Request body description"
+            requestModels:
+              "application/json": "RespondentRegistrationRequest"
+            methodResponses:
+              -
+                statusCode: '200'
+                responseModels:
+                  "application/json": "RespondentRegistrationResponse"

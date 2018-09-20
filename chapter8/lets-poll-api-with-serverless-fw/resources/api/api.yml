@@ -1,0 +1,180 @@
+#documentation:
+  # this is general info about the API
+  api:
+    info:
+      version: '2'
+      title: Example API
+      description: Some example API
+    tags:
+      -
+        name: Name
+        description: The first tag
+      -
+        name: Tag2
+        description: That other tag that we all love
+  # Now we describe all the models that we use
+  models:
+    -
+      name: Poll
+      contentType: "application/json"
+      schema :
+          type: "object"
+          required:
+          - "pollOptions"
+          - "pollQuestion"
+          - "pollTitle"
+          properties:
+            pollId:
+              type: "string"
+            pollTitle:
+              type: "string"
+            pollQuestion:
+              type: "string"
+            pollOptions:
+              type: "array"
+              items:
+                type: "string"
+
+    -
+      name: Polls
+      contentType: "application/json"
+      schema:
+        type: "object"
+        properties:
+          polls:
+            type: "array"
+            items:
+              $ref: "{{model: Poll}}"
+    -
+      name: PollCreationRequest
+      contentType: "application/json"
+      schema:
+        type: "object"
+        required:
+        - "createdBy"
+        - "pollQuestion"
+        - "pollTitle"
+        properties:
+          pollTitle:
+            type: "string"
+          pollQuestion:
+            type: "string"
+          createdBy:
+            type: "string"
+    -
+      name: PollResponseRequest
+      contentType: "application/json"
+      schema:
+        type: "object"
+        required:
+        - "pollResponse"
+        - "pollId"
+        - "respondentId"
+        properties:
+          pollId:
+            type: "string"
+          pollResponse:
+            type: "string"
+          respondentId:
+            type: "string"
+    -
+      name: PollResponseResponse
+      contentType: "application/json"
+      schema:
+        type: "object"
+        properties:
+          message:
+            type: "string"
+
+    -
+      name: PollResponseStatistics
+      contentType: "application/json"
+      schema:
+        type: "object"
+        properties:
+          response:
+            type: "string"
+          count:
+            type: "integer"
+          percentage:
+            type: "number"
+    -
+      name: PollResponsesResultResponse
+      contentType: "application/json"
+      schema:
+        type: "object"
+        properties:
+          pollId:
+            type: "string"
+          pollTitle:
+            type: "string"
+          pollQuestion:
+            type: "string"
+          responses:
+            type: "array"
+            items:
+              #$ref: "#/definitions/PollResponseStatistics"
+              $ref: "{{model: PollResponseStatistics}}"
+
+    -
+      name: Polls
+      contentType: "application/json"
+      schema:
+        type: "object"
+        properties:
+          polls:
+            type: "array"
+            items:
+              $ref: "{{model: Poll}}"
+
+    -
+      name: RespondentRegistrationRequest
+      contentType: "application/json"
+      schema:
+        type: "object"
+        required:
+          - "token"
+          - "emailId"
+          - "displayName"
+        properties:
+          token:
+            type: "string"
+          emailId:
+            type: "string"
+          displayName:
+            type: "string"
+    -
+      name: RespondentRegistrationResponse
+      contentType: "application/json"
+      schema:
+        type: "object"
+        properties:
+          letsPollRespondentId:
+            type: "string"
+
+    -
+      name: RespondentDetails
+      contentType: "application/json"
+      schema:
+        type: "object"
+        properties:
+          respondentDisplayName:
+            type: "string"
+          respondentEmail:
+            type: "string"
+
+    -
+      name: PollDetails
+      contentType: "application/json"
+      schema:
+        type: "object"
+        properties:
+          createdBy:
+            type: "object"
+            $ref: "{{model: RespondentDetails}}"
+          poll:
+            type: "object"
+            $ref: "{{model: Poll}}"
+          statistics:
+            type: "array"
+            $ref: "{{model: PollResponseStatistics}}"
