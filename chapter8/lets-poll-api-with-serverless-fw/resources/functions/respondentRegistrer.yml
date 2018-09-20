@@ -1,5 +1,5 @@
   respondentRegistrer:
-    handler: com.serverless.letspoll.handlers.RespondentRegistrar
+    handler: com.packt.serverless.kotlin.letspoll.handlers.RespondentRegistrer
     environment:
       databaseUsername: ${env:LP_DATABASE_USERNAME}
       databasePassword: ${env:LP_DATABASE_PASSWORD}

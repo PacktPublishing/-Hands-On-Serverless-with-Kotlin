@@ -10,6 +10,7 @@ import com.packt.serverless.kotlin.letspoll.models.generated.Tables
 
 import com.packt.serverless.kotlin.letspoll.models.generated.tables.records.PollRecord
 import com.packt.serverless.kotlin.letspoll.models.responses.PollsResponse
+import org.apache.logging.log4j.LogManager
 
 
 class PollsGetter : RequestHandler<Map<String, Any>, ApiGatewayResponse> {
@@ -30,6 +31,9 @@ class PollsGetter : RequestHandler<Map<String, Any>, ApiGatewayResponse> {
             objectBody = PollsResponse(polls)
         }
 
+    }
+    companion object {
+        private val LOG = LogManager.getLogger(PollsGetter::class.java)
     }
 
 }

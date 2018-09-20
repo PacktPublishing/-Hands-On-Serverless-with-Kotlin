@@ -15,3 +15,5 @@ data class RespondentDetails(val respondentDisplayName: String, val respondentEm
 data class RespondentRegistrationResponse(val letsPollRespondentId: String) : Response()
 
 data class PollsResponse(val polls: List<Poll>) : Response()
+
+data class APIErrorMessage(val  message: String):Response()
