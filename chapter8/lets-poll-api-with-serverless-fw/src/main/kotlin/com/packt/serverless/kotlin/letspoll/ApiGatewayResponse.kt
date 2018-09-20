@@ -1,4 +1,4 @@
-package com.serverless
+package com.packt.serverless.kotlin.letspoll
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -19,7 +19,7 @@ class ApiGatewayResponse(
   }
 
   class Builder {
-    var LOG: Logger = LogManager.getLogger(ApiGatewayResponse.Builder::class.java)
+    var LOG: Logger = LogManager.getLogger(Builder::class.java)
     var objectMapper: ObjectMapper = ObjectMapper()
 
     var statusCode: Int = 200
