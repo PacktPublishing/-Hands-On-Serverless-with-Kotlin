@@ -19,3 +19,5 @@ data class PollResponseStatistis(val response: String, val count: Int)
 data class RespondentDetails(val respondentDisplayName: String,val respondentEmail: String)
 
 data class PollDetailsResponse(val poll:Poll,val createdBy:RespondentDetails,val statistics:List<PollResponseStatistics>)
+
+

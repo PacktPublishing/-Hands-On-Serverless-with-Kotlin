@@ -22,7 +22,7 @@ import java.io.IOException
 
 class PollCreator : RequestHandler<Map<String, Any>, ApiGatewayResponse> {
 
-
+    val dslContext = DatabaseAccessUtils.databaseConnection
     override fun handleRequest(input: Map<String, Any>, context: Context): ApiGatewayResponse {
         val mapper = ObjectMapper().registerKotlinModule()
         val pollToCreate: PollCreationRequest
@@ -36,8 +36,6 @@ class PollCreator : RequestHandler<Map<String, Any>, ApiGatewayResponse> {
             }
 
         }
-
-        val dslContext = DatabaseAccessUtils.databaseConnection
         try {
             dslContext!!.transaction { configuration ->
                 val respondentRecord = DSL.using(configuration)
