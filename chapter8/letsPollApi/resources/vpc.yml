@@ -1,0 +1,196 @@
+Resources:
+  letsPollVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 172.31.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      InstanceTenancy: default
+      Tags:
+           - Key: Name
+             Value: Lets Poll VPC
+
+  letsPollIGW:
+      Type: AWS::EC2::InternetGateway
+
+  letsPollVPCGatewayAttachment:
+      Type: AWS::EC2::VPCGatewayAttachment
+      Properties:
+        VpcId:
+          Ref: letsPollVPC
+        InternetGatewayId:
+          Ref: letsPollIGW
+
+  letsPollPublicSubnet:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId:
+          Ref: letsPollVPC
+        AvailabilityZone: ap-south-1a
+        CidrBlock: 172.31.0.0/20
+        MapPublicIpOnLaunch: true
+        Tags:
+            - Key: Name
+              Value: Lets Poll VPC Public Subnet 1
+
+  letsPollPrivateSubnet1:
+       Type: AWS::EC2::Subnet
+       Properties:
+         VpcId:
+            Ref: letsPollVPC
+         CidrBlock: 172.31.16.0/20
+         AvailabilityZone: ap-south-1a
+         MapPublicIpOnLaunch: false
+         Tags:
+             - Key: Name
+               Value: Lets Poll VPC Private Subnet 1
+
+  letsPollPrivateSubnet2:
+       Type: AWS::EC2::Subnet
+       Properties:
+         VpcId:
+            Ref: letsPollVPC
+         CidrBlock: 172.31.32.0/20
+         AvailabilityZone: ap-south-1b
+         MapPublicIpOnLaunch: false
+         Tags:
+             - Key: Name
+               Value: Lets Poll VPC Private Subnet 2
+
+  letsPollVPCNatGateway1EIP:
+      Type: AWS::EC2::EIP
+      DependsOn: letsPollVPCGatewayAttachment
+      Properties:
+          Domain: vpc
+  letsPollVPCNatGateway1:
+      Type: AWS::EC2::NatGateway
+      DependsOn: letsPollVPCNatGateway1EIP
+      Properties:
+          AllocationId:  { Fn::GetAtt: [ "letsPollVPCNatGateway1EIP", "AllocationId" ] }
+          SubnetId:
+            Ref: letsPollPublicSubnet
+          Tags:
+              - Key: Name
+                Value: Lets Poll VPC NAT Gateway 1
+  letsPollVPCPublicRouteTable:
+      Type: AWS::EC2::RouteTable
+      Properties:
+          VpcId:
+            Ref: letsPollVPC
+          Tags:
+              - Key: Name
+                Value: Lets Poll Public Subnet Route Table
+  letsPollVPCDefaultPublicRoute:
+      Type: AWS::EC2::Route
+      DependsOn: letsPollVPCGatewayAttachment
+      Properties:
+        RouteTableId:
+          Ref: letsPollVPCPublicRouteTable
+        DestinationCidrBlock: 0.0.0.0/0
+        NatGatewayId:
+          Ref: letsPollVPCNatGateway1
+
+  letsPollPublicSubnet1RouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+        RouteTableId:
+          Ref: letsPollVPCPublicRouteTable
+        SubnetId:
+          Ref: letsPollPublicSubnet
+
+  letsPollPrivateRouteTable1:
+      Type: AWS::EC2::RouteTable
+      Properties:
+        VpcId:
+          Ref: letsPollVPC
+
+  letsPollPrivateRouteTable2:
+      Type: AWS::EC2::RouteTable
+      Properties:
+        VpcId:
+         Ref: letsPollVPC
+
+
+  letsPollDefaultPrivateRoute1:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: letsPollPrivateRouteTable1
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: letsPollVPCNatGateway1
+
+  letsPollDefaultPrivateRoute2:
+     Type: AWS::EC2::Route
+     Properties:
+       RouteTableId:
+         Ref: letsPollPrivateRouteTable2
+       DestinationCidrBlock: 0.0.0.0/0
+       NatGatewayId:
+         Ref: letsPollVPCNatGateway1
+
+  letsPollPrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: letsPollPrivateRouteTable1
+      SubnetId:
+        Ref: letsPollPrivateSubnet1
+
+  letsPollPrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: letsPollPrivateRouteTable2
+      SubnetId:
+         Ref: letsPollPrivateSubnet2
+
+  lambdaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group for Lambda
+      VpcId:
+        Ref: letsPollVPC
+      #SecurityGroupEgress:
+      #- IpProtocol: tcp
+      #  FromPort: -1
+      #  ToPort: -1
+      #  CidrIp: 0.0.0.0/0
+      Tags:
+          - Key: Name
+            Value: Lambda Security group
+
+
+  databaseSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group for database
+      VpcId:
+        Ref: letsPollVPC
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 5432
+        ToPort: 5432
+        SourceSecurityGroupId:
+          Ref: lambdaSecurityGroup
+      Tags:
+          - Key: Name
+            Value: Database Security group
+
+  #letsPollDatabase: ${file(./rds.yml)}
+    #Type: "AWS::RDS::DBInstance"
+    #Properties:
+    #  DBName: "forumexample"
+    #  AllocatedStorage: 5
+    #  DBInstanceClass: "db.t2.micro"
+    #  Engine: "postgres"
+    #  EngineVersion: "9.5.4"
+    #  MasterUsername: "example"
+    #  MasterUserPassword: "serverless"
+    #  VPCSecurityGroups:
+    #    Ref: databaseSecurityGroup
+    #  Tags:
+    #    -
+    #      Key: "Name"
+    #      Value: "forum_example"
+    #DeletionPolicy: "Snapshot"

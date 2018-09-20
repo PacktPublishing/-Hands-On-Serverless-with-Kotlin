@@ -1,0 +1,46 @@
+service:
+  name: letspoll
+
+custom:
+    accountId: AWS::AccountId
+
+frameworkVersion: ">=1.0.0 <2.0.0"
+
+
+plugins:
+  - serverless-cf-vars
+
+provider:
+  name: aws
+  runtime: java8
+  stage: ${opt:stage,'beta'} # Set the default stage used. Default is dev
+  region: ${opt:region,'ap-south-1'} # Overwrite the default region used. Default is us-east-1
+  profile: ${opt:profile,'lets-poll-default'}
+# The "Resources" your "Functions" use.  Raw AWS CloudFormation goes in here.
+resources:
+  - ${file(./resources/vpc.yml)}
+  #- ${file(./resources/rds.yml)}
+  - ${file(./resources/cognito.yml)}
+  - ${file(./resources/lambdaExecutionRole.yml)}
+  - ${file(./resources/lambdaBasicExecutionPolicy.yml)}
+  - ${file(./resources/lambdaVpcPolicy.yml)}
+  - ${file(./resources/api.yml)}
+  - ${file(./resources/kms.yml)}
+
+
+
+
+#Outputs:
+#    letsPollVPCID:
+#      Description: The VPC id for LetsPoll VPC
+#      Value:
+#        Ref: letsPollVPC
+#      Export:
+#        Name: ${self:service}:letsPollVPCId # see Fn::ImportValue to use in other services and http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html for documentation on use.
+
+#    letsPollIGWID:
+#      Description: The VPC id for LetsPoll VPC
+#      Value:
+#        Ref: letsPollIGW
+#      Export:
+#        Name: ${self:service}:letsPollIGWId # see Fn::ImportValue to use in other services and http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html for documentation on use.
