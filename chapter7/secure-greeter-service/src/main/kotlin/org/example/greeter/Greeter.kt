@@ -22,13 +22,12 @@ import com.amazonaws.util.Base64
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
 
-class Greeter : RequestHandler<Map<String, Any>, String> {
+class Greeter : RequestHandler<String, String> {
 
 
-    override fun handleRequest(input:Map<String, Any>, context: Context): String {
+    override fun handleRequest(greetee:String, context: Context): String {
         val logger = context.logger
-
-        input.forEach { (key, value) -> println("$key = $value") }
+        logger.log("lets greet $greetee")
         val userName = decryptKey("databaseUsername")
         val password = decryptKey("databasePassword")
         val databaseUrl = decryptKey("databaseUrl")
@@ -51,17 +50,18 @@ class Greeter : RequestHandler<Map<String, Any>, String> {
             val dslContext = DSL.using(conn, SQLDialect.POSTGRES)
             val result = dslContext.fetchOne("SELECT * FROM now()")
             val ts = result.get("now") as java.sql.Timestamp
-            return "Hello, " + "Ameya" + " on " + ts.toString() + " as per the time on database server"
+            val tsString = ts.toString()
+            return "Hello,  $greetee on $tsString  as per the time on database server"
 
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-        return "Hello, " + "ameya" + " on " + Date().toString() + " as per the default time on lambda"
+        val lambdaTime =  Date().toString()
+        return "Hello, $greetee  on $lambdaTime  as per the default time on lambda"
     }
 
     private fun decryptKey(environmentKeyName: String): String {
-
+    return System.getenv(environmentKeyName)
         val encryptedKey = Base64.decode(System.getenv(environmentKeyName))
 
         val client = AWSKMSClientBuilder.defaultClient()
