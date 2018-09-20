@@ -1,9 +1,8 @@
   databaseMigrator:
-    handler: com.serverless.letspoll.handlers.DatabaseMigrator
+    handler: com.packt.serverless.kotlin.letspoll.handlers.DatabaseMigrator
     environment:
       databaseUsername: ${env:LP_DATABASE_USERNAME}
       databasePassword: ${env:LP_DATABASE_PASSWORD}
-      #databaseUrl: ${env:LP_DATABASE_URL}
       databaseUrl: { Fn::GetAtt: [ "letsPollDatabase", "Endpoint.Address" ] }
       databasePort: ${env:LP_DATABASE_PORT}
       databaseName: ${env:LP_DATABASE_NAME}
@@ -14,15 +13,8 @@
           timeout: 60
           cors: true
           documentation:
-            summary: Deletes a Poll by Id
+            summary: Migrates a database
             tags:
               - Name
             description: >
-              Deletes a Poll
-            pathParameters:
-              - name: "pollId"
-                in: "path"
-                required: true
-                type: "string"
-          #authorizerFunc:
-          #  handler: com.serverless.letspoll.handlers.PollDeletorAuthoriser
+              To instrument the RDS

@@ -8,7 +8,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 
-import com.sun.corba.se.impl.encoding.CodeSetConversion.impl
+
 
 
 object DatabaseAccessUtils {
@@ -77,8 +77,6 @@ object DatabaseAccessUtils {
 
     private val connectionString: String
         get() {
-            val userName = LambdaEnvironmentUtils.getValue("databaseUsername")
-            val password = LambdaEnvironmentUtils.getValue("databasePassword")
             val databaseUrl = LambdaEnvironmentUtils.getValue("databaseUrl")
             val databasePort = LambdaEnvironmentUtils.getValue("databasePort")
             val databaseName = LambdaEnvironmentUtils.getValue("databaseName")

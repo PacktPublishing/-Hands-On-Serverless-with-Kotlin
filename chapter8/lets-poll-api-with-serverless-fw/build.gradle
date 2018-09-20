@@ -51,5 +51,13 @@ dependencies {
   compile group: 'org.liquibase', name: 'liquibase-core', version:'3.4.1'
   runtime group: 'org.postgresql',name:'postgresql',version:'9.4-1201-jdbc41'
 
+}
 
+shadowJar{
+    mergeServiceFiles('META-INF/spring.*')
+    exclude "META-INF/*.SF"
+    exclude "META-INF/*.DSA"
+    exclude "META-INF/*.RSA"
+    exclude "META-INF/LICENSE"
+    archiveName = "lets-poll-${version}.${extension}"
 }
