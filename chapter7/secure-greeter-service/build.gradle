@@ -1,0 +1,55 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea'
+
+group = 'org.example'
+version = 'dev'
+
+description = """secure-greeter-service"""
+
+
+sourceCompatibility = 1.5
+targetCompatibility = 1.5
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+}
+
+buildscript {
+  repositories {
+    mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.51"
+    classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
+    classpath "com.github.jengelman.gradle.plugins:shadow:2.0.1"
+    classpath "de.sebastianboegl.gradle.plugins:shadow-log4j-transformer:2.1.1"
+  }
+}
+
+apply plugin: 'kotlin'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: "de.sebastianboegl.shadow.transformer.log4j"
+
+repositories {
+  maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+
+dependencies {
+  compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.1.51'
+
+  compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version:'1.1.0'
+  compile group: 'com.amazonaws', name: 'aws-lambda-java-log4j2', version:'1.0.0'
+  compile group: 'com.amazonaws', name: 'aws-lambda-java-events', version:'2.0.1'
+  compile group: 'com.amazonaws', name: 'aws-java-sdk-kms', version: '1.11.397'
+
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.8.5'
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.8.5'
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.8.5'
+  compile 'org.jooq:jooq:3.8.2'
+  compile 'org.jooq:jooq-meta:3.8.2'
+  runtime group: 'org.postgresql', name: 'postgresql', version: '9.4-1201-jdbc41'
+}
+
