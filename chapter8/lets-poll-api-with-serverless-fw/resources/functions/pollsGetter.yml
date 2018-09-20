@@ -3,8 +3,8 @@
     environment:
       databaseUsername: ${env:LP_DATABASE_USERNAME}
       databasePassword: ${env:LP_DATABASE_PASSWORD}
-      #databaseUrl: { Fn::GetAtt: [ "letsPollDatabase", "Endpoint.Address" ] }
-      databaseUrl: ${env:LP_DATABASE_URL}
+      databaseUrl: { Fn::GetAtt: [ "letsPollDatabase", "Endpoint.Address" ] }
+      #databaseUrl: ${env:LP_DATABASE_URL}
       databasePort: ${env:LP_DATABASE_PORT}
       databaseName: ${env:LP_DATABASE_NAME}
     events:

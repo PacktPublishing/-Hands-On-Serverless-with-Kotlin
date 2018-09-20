@@ -2,6 +2,7 @@ package com.packt.serverless.kotlin.letspoll
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationConfig
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.nio.charset.StandardCharsets
@@ -21,6 +22,7 @@ class ApiGatewayResponse(
   class Builder {
     var LOG: Logger = LogManager.getLogger(Builder::class.java)
     var objectMapper: ObjectMapper = ObjectMapper()
+
 
     var statusCode: Int = 200
     var rawBody: String? = null
