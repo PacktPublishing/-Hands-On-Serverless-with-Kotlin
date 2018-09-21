@@ -40,7 +40,7 @@ class PollResponder : RequestHandler<Map<String, Any>, ApiGatewayResponse> {
                 }
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            LOG.error(e.printStackTrace())
             return ApiGatewayResponse.build {
                 statusCode = 400
                 objectBody = APIErrorMessage("could not parse the request body properly so can't record the response to this poll")

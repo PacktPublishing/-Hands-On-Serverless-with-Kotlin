@@ -10,6 +10,7 @@ import liquibase.database.jvm.JdbcConnection
 import liquibase.database.DatabaseFactory
 import com.packt.serverless.kotlin.letspoll.commons.DatabaseAccessUtils
 import com.amazonaws.services.lambda.runtime.RequestHandler
+import com.packt.serverless.kotlin.letspoll.models.responses.APISuccessResponse
 import org.apache.logging.log4j.LogManager
 
 
@@ -23,12 +24,12 @@ class DatabaseMigrator : RequestHandler<Map<String, Any>, ApiGatewayResponse> {
             val liquiBase = liquibase.Liquibase("letsPoll.changelog.xml", ClassLoaderResourceAccessor(), dataBase)
             liquiBase.update(Contexts(), LabelExpression())
         } catch (e: Exception) {
-            LOG.error("Exception occured in migrating the database")
-            e.printStackTrace()
+            LOG.error("Exception occured in migrating the database",e.printStackTrace())
         }
 
         return ApiGatewayResponse.build {
             statusCode = 200
+            objectBody = APISuccessResponse("Sucessfully Migrated the database")
         }
 
     }

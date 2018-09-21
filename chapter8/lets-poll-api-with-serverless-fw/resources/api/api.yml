@@ -179,3 +179,13 @@
           statistics:
             type: "array"
             $ref: "{{model: PollResponseStatistics}}"
+
+    - name: APISuccessWithMessage
+      contentType: "application/json"
+      schema:
+        type: "object"
+        properties:
+          createdBy:
+            type: "string"
+
+

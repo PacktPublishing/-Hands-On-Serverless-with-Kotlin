@@ -28,4 +28,4 @@
               -
                 statusCode: 200
                 responseModels:
-                  "application/json": "PollResponseResponse"
+                  "application/json": "APISuccessWithMessage"
