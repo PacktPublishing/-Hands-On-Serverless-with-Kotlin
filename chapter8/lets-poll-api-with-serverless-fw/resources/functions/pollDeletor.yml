@@ -27,8 +27,8 @@
             methodResponses:
             - statusCode: '200'
               responseModels:
-                "application/json": "APISuccessResponseWithMessage"
+                "application/json": "{{model: APISuccessResponseWithMessage}}"
             - statusCode: '409'
               responseModels:
-                "application/json": "APIErrorResponseWithMessage"
+                "application/json": "{{model: APIErrorResponseWithMessage}}"
 

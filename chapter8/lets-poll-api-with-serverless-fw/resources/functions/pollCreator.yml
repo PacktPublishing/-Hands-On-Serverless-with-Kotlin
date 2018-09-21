@@ -28,10 +28,10 @@
               responseModels:
                 "application/json": "Polls"
 
+            - statusCode: '200'
+              responseModels:
+                "application/json": "{{model: APISuccessResponseWithMessage}}"
             - statusCode: '409'
               responseModels:
-                "application/json": "APIErrorResponseWithMessage"
+                "application/json": "{{model: APIErrorResponseWithMessage}}"
 
-            - statusCode: '404'
-              responseModels:
-                "application/json": "APIErrorResponseWithMessage"

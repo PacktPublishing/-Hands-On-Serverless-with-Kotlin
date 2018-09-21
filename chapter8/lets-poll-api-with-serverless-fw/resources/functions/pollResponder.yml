@@ -25,7 +25,6 @@
 
 
             methodResponses:
-              -
-                statusCode: 200
+              - statusCode: '200'
                 responseModels:
-                  "application/json": "APISuccessWithMessage"
+                  "application/json": "{{model: APISuccessWithMessage}}"

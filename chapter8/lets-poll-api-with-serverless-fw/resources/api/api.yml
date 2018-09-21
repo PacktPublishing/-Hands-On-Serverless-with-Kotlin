@@ -180,19 +180,21 @@
             type: "array"
             $ref: "{{model: PollResponseStatistics}}"
 
-    - name: APISuccessResponseWithMessage
+    -
+    name: APISuccessResponseWithMessage
       contentType: "application/json"
       schema:
         type: "object"
         properties:
-          createdBy:
+          message:
             type: "string"
 
 
-    - name: APIErrorResponseWithMessage
+    -
+    name: APIErrorResponseWithMessage
       contentType: "application/json"
         schema:
           type: "object"
           properties:
-            createdBy:
+            message:
               type: "string"

@@ -23,5 +23,5 @@
                   "application/json": "Polls"
               - statusCode: '404'
                 responseModels:
-                  "application/json": "APIErrorResponseWithMessage"
+                  "application/json": "{{model: APIErrorResponseWithMessage}}"
 

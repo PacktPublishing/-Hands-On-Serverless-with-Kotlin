@@ -3,7 +3,7 @@ service: lets-poll-api-with-serverless-fw
 
 custom:
   accountId: AWS::AccountId
-  #documentation: ${file(./resources/api/api.yml)}
+  documentation: ${file(./resources/api.yml)}
 
 
 
