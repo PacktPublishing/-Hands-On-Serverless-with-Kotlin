@@ -18,3 +18,11 @@ databaseMigratorFixer:
         - Name
         description: >
           To fix the database changelog lock
+        methodResponses:
+        - statusCode: '200'
+          responseModels:
+            "application/json": "APISuccessResponseWithMessage"
+
+        - statusCode: '409'
+          responseModels:
+            "application/json": "APIErrorResponseWithMessage"

@@ -39,7 +39,7 @@ class PollDeletor : RequestHandler<Map<String, Any?>, ApiGatewayResponse> {
         } catch (e: Exception) {
             LOG.error("Error occured while deleting the poll",e.printStackTrace())
             return ApiGatewayResponse.build {
-                statusCode = 200
+                statusCode = 409
                 objectBody = APIErrorMessage("Could not delete the poll")
             }
 
@@ -53,10 +53,6 @@ class PollDeletor : RequestHandler<Map<String, Any?>, ApiGatewayResponse> {
 
     }
 
-
-    /*override  fun handleRequest(input: Map<String, Any?>, context: Context): ApiGatewayResponse {
-
-    }*/
 
     companion object {
         private val LOG = LogManager.getLogger(PollDeletor::class.java)

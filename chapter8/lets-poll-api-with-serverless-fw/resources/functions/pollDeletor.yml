@@ -24,3 +24,11 @@
                 type: "string"
           #authorizerFunc:
           #  handler: com.serverless.letspoll.handlers.PollDeletorAuthoriser
+            methodResponses:
+            - statusCode: '200'
+              responseModels:
+                "application/json": "APISuccessResponseWithMessage"
+            - statusCode: '409'
+              responseModels:
+                "application/json": "APIErrorResponseWithMessage"
+
