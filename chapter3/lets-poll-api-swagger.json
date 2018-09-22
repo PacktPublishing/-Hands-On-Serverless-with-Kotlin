@@ -1,0 +1,498 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Lets Poll API",
+    "version": "2018-09-22T09:32:05Z",
+    "title": "lets-poll-api"
+  },
+  "basePath": "/beta",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/migrations": {
+      "post": {
+        "tags": [
+          "Name"
+        ],
+        "summary": "Migrates a database",
+        "description": "To instrument the RDS\n",
+        "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Name"
+        ],
+        "summary": "Migrates a database",
+        "description": "To fix the database changelog lock\n",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/APISuccessResponseWithMessage"
+            }
+          },
+          "409": {
+            "description": "409 response",
+            "schema": {
+              "$ref": "#/definitions/APIErrorResponseWithMessage"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/polls": {
+      "get": {
+        "tags": [
+          "Tag1"
+        ],
+        "summary": "Gets all Polls",
+        "description": "Gets a List of All polls\n",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Polls"
+            }
+          },
+          "404": {
+            "description": "404 response",
+            "schema": {
+              "$ref": "#/definitions/APIErrorResponseWithMessage"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Name"
+        ],
+        "summary": "Creates a Poll",
+        "description": "Creates a Poll\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "PollCreationRequest",
+            "description": "Request body description",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PollCreationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Polls"
+            }
+          },
+          "409": {
+            "description": "409 response",
+            "schema": {
+              "$ref": "#/definitions/APIErrorResponseWithMessage"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/polls/{pollId}": {
+      "get": {
+        "tags": [
+          "Name"
+        ],
+        "summary": "Gets a single poll by Id",
+        "description": "Gets a Poll\n",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/PollDetails"
+            }
+          },
+          "404": {
+            "description": "404 response",
+            "schema": {
+              "$ref": "#/definitions/APIErrorResponseWithMessage"
+            }
+          },
+          "409": {
+            "description": "409 response",
+            "schema": {
+              "$ref": "#/definitions/APIErrorResponseWithMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Name"
+        ],
+        "summary": "Deletes a Poll by Id",
+        "description": "Deletes a Poll\n",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/APISuccessResponseWithMessage"
+            }
+          },
+          "409": {
+            "description": "409 response",
+            "schema": {
+              "$ref": "#/definitions/APIErrorResponseWithMessage"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/respondent": {
+      "post": {
+        "summary": "Registers a respondent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "RespondentRegistrationRequest",
+            "description": "Request body description",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RespondentRegistrationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/RespondentRegistrationResponse"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/response": {
+      "post": {
+        "tags": [
+          "Name"
+        ],
+        "summary": "Responds to the poll",
+        "description": "Records the response for a poll\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "PollResponseRequest",
+            "description": "Request body description",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PollResponseRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/APISuccessResponseWithMessage"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "APIErrorResponseWithMessage": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "APISuccessResponseWithMessage": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "PollResponseStatistics": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "string"
+        },
+        "percentage": {
+          "type": "number"
+        },
+        "count": {
+          "type": "integer"
+        }
+      }
+    },
+    "RespondentRegistrationRequest": {
+      "type": "object",
+      "required": [
+        "displayName",
+        "emailId",
+        "token"
+      ],
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "emailId": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "RespondentRegistrationResponse": {
+      "type": "object",
+      "properties": {
+        "letsPollRespondentId": {
+          "type": "string"
+        }
+      }
+    },
+    "RespondentDetails": {
+      "type": "object",
+      "properties": {
+        "respondentEmail": {
+          "type": "string"
+        },
+        "respondentDisplayName": {
+          "type": "string"
+        }
+      }
+    },
+    "Poll": {
+      "type": "object",
+      "required": [
+        "pollOptions",
+        "pollQuestion",
+        "pollTitle"
+      ],
+      "properties": {
+        "pollId": {
+          "type": "string"
+        },
+        "pollTitle": {
+          "type": "string"
+        },
+        "pollQuestion": {
+          "type": "string"
+        },
+        "pollOptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "PollCreationRequest": {
+      "type": "object",
+      "required": [
+        "createdBy",
+        "pollQuestion",
+        "pollTitle"
+      ],
+      "properties": {
+        "createdBy": {
+          "type": "string"
+        },
+        "pollTitle": {
+          "type": "string"
+        },
+        "pollQuestion": {
+          "type": "string"
+        }
+      }
+    },
+    "PollDetails": {
+      "type": "object",
+      "properties": {
+        "createdBy": {
+          "$ref": "#/definitions/RespondentDetails"
+        },
+        "poll": {
+          "$ref": "#/definitions/Poll"
+        },
+        "statistics": {
+          "$ref": "#/definitions/PollResponseStatistics"
+        }
+      }
+    },
+    "PollResponseRequest": {
+      "type": "object",
+      "required": [
+        "pollId",
+        "pollResponse",
+        "respondentId"
+      ],
+      "properties": {
+        "pollId": {
+          "type": "string"
+        },
+        "pollResponse": {
+          "type": "string"
+        },
+        "respondentId": {
+          "type": "string"
+        }
+      }
+    },
+    "Polls": {
+      "type": "object",
+      "properties": {
+        "polls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Poll"
+          }
+        }
+      }
+    }
+  }
+}
