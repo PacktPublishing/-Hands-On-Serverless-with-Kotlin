@@ -7,6 +7,4 @@
 *.jar
 *.DS_Store
 *env
-.serverless-backup/
-chapter3/
-letsPollApi-backup/
+*-backup/
