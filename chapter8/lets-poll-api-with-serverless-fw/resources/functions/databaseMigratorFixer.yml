@@ -1,0 +1,28 @@
+databaseMigratorFixer:
+  handler: com.packt.serverless.kotlin.letspoll.handlers.DatabaseMigratorFixer
+  environment:
+    databaseUsername: ${env:LP_DATABASE_USERNAME}
+    databasePassword: ${env:LP_DATABASE_PASSWORD}
+    databaseUrl: { Fn::GetAtt: [ "letsPollDatabase", "Endpoint.Address" ] }
+    databasePort: ${env:LP_DATABASE_PORT}
+    databaseName: ${env:LP_DATABASE_NAME}
+  events:
+  - http:
+      path: /migrations
+      method: DELETE
+      timeout: 60
+      cors: true
+      documentation:
+        summary: Migrates a database
+        tags:
+        - Name
+        description: >
+          To fix the database changelog lock
+        methodResponses:
+        - statusCode: '200'
+          responseModels:
+            "application/json": "APISuccessResponseWithMessage"
+        - statusCode: '409'
+          responseModels:
+            "application/json": "APIErrorResponseWithMessage"
+

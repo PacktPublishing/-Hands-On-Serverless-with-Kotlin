@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "pollId": {
+      "type": "string"
+    },
+    "pollTitle": {
+      "type": "string"
+    },
+    "pollQuestion": {
+      "type": "string"
+    },
+    "responses": {
+      "type": "array",
+      "items": {
+        "$ref": "{{model: PollResponseStatistics}}"
+      }
+    }
+  }
+}

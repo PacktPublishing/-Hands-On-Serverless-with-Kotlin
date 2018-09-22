@@ -1,0 +1,27 @@
+  pollsGetter:
+    handler: com.packt.serverless.kotlin.letspoll.handlers.PollsGetter
+    environment:
+      databaseUsername: ${env:LP_DATABASE_USERNAME}
+      databasePassword: ${env:LP_DATABASE_PASSWORD}
+      databaseUrl: { Fn::GetAtt: [ "letsPollDatabase", "Endpoint.Address" ] }
+      databasePort: ${env:LP_DATABASE_PORT}
+      databaseName: ${env:LP_DATABASE_NAME}
+    events:
+      - http:
+          path: /polls/
+          method: get
+          cors: true
+          documentation:
+            summary: Gets all Polls
+            tags:
+              - Tag1
+            description: >
+              Gets a List of All polls
+            methodResponses:
+              - statusCode: '200'
+                responseModels:
+                  "application/json": "Polls"
+              - statusCode: '404'
+                responseModels:
+                  "application/json": "APIErrorResponseWithMessage"
+

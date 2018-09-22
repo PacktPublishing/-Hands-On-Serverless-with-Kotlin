@@ -1,0 +1,59 @@
+  # You must have the documentation object
+  documentation:
+    # this is general info about the API
+    api:
+      info:
+        version: '2'
+        title: Example API
+        description: Some example API
+      tags:
+        -
+          name: Name
+          description: The first tag
+        -
+          name: Tag2
+          description: That other tag that we all love
+    # Now we describe all the models that we use
+    models:
+      -
+        name: Poll
+        contentType: "application/json"
+        schema: $file(./api_models/poll.json)
+      -
+        name: PollCreationRequest
+        contentType: "application/json"
+        schema: $file(./api_models/pollCreationResponse.json)
+
+      #-
+      #  name: PollResponseRequest
+      #  contentType: "application/json"
+      #  schema: $file(./api_models/pollResponseRequest.json)
+      #-
+      #  name: PollResponsesResultResponse
+      #  contentType: "application/json"
+      #  schema: $file(./api_models/pollResponsesResultResponse.json)
+      #-
+      #  name: PollResponseStatistics
+      #  contentType: "application/json"
+      #  schema: $file(./api_models/pollResponseStatistics.json)
+      -
+        name: Polls
+        contentType: "application/json"
+        schema: $file(./api_models/polls.json)
+
+      -
+        name: RespondentRegistrationRequest
+        contentType: "application/json"
+        schema: $file(./api_models/respondentRegistrationRequest.json)
+
+      -
+        name: RespondentRegistrationResponse
+        contentType: "application/json"
+        schema: $file(./api_models/respondentRegistrationResponse.json)
+
+  commonModelSchemaFragments:
+    # defining common fragments means you can reference them with a single line
+    MethodResponse400Json:
+      statusCode: '400'
+      responseModels:
+        "application/json": 400JsonResponse

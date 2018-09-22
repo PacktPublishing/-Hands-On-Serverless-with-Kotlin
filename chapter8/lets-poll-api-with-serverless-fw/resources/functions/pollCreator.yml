@@ -1,0 +1,34 @@
+  pollCreator:
+    handler: com.packt.serverless.kotlin.letspoll.handlers.PollCreator
+    environment:
+      databaseUsername: ${env:LP_DATABASE_USERNAME}
+      databasePassword: ${env:LP_DATABASE_PASSWORD}
+      databaseUrl: { Fn::GetAtt: [ "letsPollDatabase", "Endpoint.Address" ] }
+      databasePort: ${env:LP_DATABASE_PORT}
+      databaseName: ${env:LP_DATABASE_NAME}
+    events:
+      - http:
+          path: /polls/
+          method: POST
+          cors: true
+          documentation:
+            summary: Creates a Poll
+            tags:
+              - Name
+            description: >
+              Creates a Poll
+
+            requestBody:
+              description: "Request body description"
+            requestModels:
+              "application/json": "PollCreationRequest"
+
+            methodResponses:
+            - statusCode: '200'
+              responseModels:
+                "application/json": "Polls"
+
+            - statusCode: '409'
+              responseModels:
+                "application/json": "APIErrorResponseWithMessage"
+
