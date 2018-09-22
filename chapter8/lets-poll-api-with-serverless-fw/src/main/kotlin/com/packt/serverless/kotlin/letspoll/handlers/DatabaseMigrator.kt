@@ -24,6 +24,10 @@ class DatabaseMigrator : RequestHandler<Map<String, Any>, ApiGatewayResponse> {
                     JdbcConnection(conn))
             val liquiBase = liquibase.Liquibase("letsPoll.changelog.xml", ClassLoaderResourceAccessor(), dataBase)
             liquiBase.update(Contexts(), LabelExpression())
+            return ApiGatewayResponse.build {
+                statusCode = 200
+                objectBody = APISuccessResponse("Sucessfully Migrated the database")
+            }
         } catch (e: Exception) {
             LOG.error("Exception occured in migrating the database",e.printStackTrace())
             return ApiGatewayResponse.build {
@@ -31,11 +35,6 @@ class DatabaseMigrator : RequestHandler<Map<String, Any>, ApiGatewayResponse> {
                 objectBody = APIErrorMessage("Could not migrate the database")
             }
 
-        }
-
-        return ApiGatewayResponse.build {
-            statusCode = 200
-            objectBody = APISuccessResponse("Sucessfully Migrated the database")
         }
 
     }
