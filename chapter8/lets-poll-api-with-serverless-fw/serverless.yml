@@ -1,0 +1,61 @@
+
+service: lets-poll-api-with-serverless-fw
+
+custom:
+  accountId: AWS::AccountId
+  documentation: ${file(./resources/api/api.yml)}
+
+
+
+frameworkVersion: ">=1.0.0 <2.0.0"
+
+
+plugins:
+- serverless-cf-vars
+- serverless-aws-documentation
+
+provider:
+  name: aws
+  runtime: java8
+  stage: ${opt:stage,'beta'}
+  region: ${opt:region,'ap-south-1'}
+  profile: ${opt:profile,'lets-poll-default'}
+  #apiKeys:
+  #   - letspoll-${self:provider.stage}-api-key
+  #usagePlan:
+  #  quota:
+  #    limit: 5000
+  #    offset: 2
+  #   period: MONTH
+  #  throttle:
+  #    burstLimit: 200
+  #   rateLimit: 100
+  vpc:
+    securityGroupIds:
+    - { Fn::GetAtt: [ "lambdaSecurityGroup", "GroupId" ] }
+    subnetIds:
+    - Ref: letsPollPrivateSubnet1
+    - Ref: letsPollPrivateSubnet2
+
+resources:
+- ${file(./resources/vpc.yml)}
+- ${file(./resources/rds.yml)}
+- ${file(./resources/cognito.yml)}
+- ${file(./resources/lambdaExecutionRole.yml)}
+- ${file(./resources/lambdaBasicExecutionPolicy.yml)}
+- ${file(./resources/lambdaVpcPolicy.yml)}
+- ${file(./resources/kms.yml)}
+
+
+package:
+  artifact: build/libs/lets-poll-1.0.0.jar
+
+functions:
+ - ${file(./resources/functions/pollsGetter.yml)}
+ - ${file(./resources/functions/pollCreator.yml)}
+ - ${file(./resources/functions/pollGetter.yml)}
+ - ${file(./resources/functions/respondentRegistrer.yml)}
+ - ${file(./resources/functions/pollResponder.yml)}
+ - ${file(./resources/functions/pollDeletor.yml)}
+ - ${file(./resources/functions/databaseMigrator.yml)}
+ - ${file(./resources/functions/databaseMigratorFixer.yml)}

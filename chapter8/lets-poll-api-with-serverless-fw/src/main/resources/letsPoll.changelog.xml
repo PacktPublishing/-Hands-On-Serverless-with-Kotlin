@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Ameya (generated)" id="1536936215590-1">
+        <createSequence sequenceName="poll_a_poll_id_seq"/>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-2">
+        <createSequence sequenceName="respondent_a_respondent_id_seq"/>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-3">
+        <createSequence sequenceName="respondent_poll_response_a_respondent_poll_response_id_seq"/>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-4">
+        <createTable tableName="poll">
+            <column autoIncrement="true" name="a_poll_id" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="poll_pkey"/>
+            </column>
+            <column name="poll_id" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="poll_title" type="VARCHAR(500)"/>
+            <column name="poll_question" type="VARCHAR(2000)"/>
+            <column name="created_by" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-5">
+        <createTable tableName="respondent">
+            <column autoIncrement="true" name="a_respondent_id" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="respondent_pkey"/>
+            </column>
+            <column name="respondent_id" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="respondent_email_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="respondent_display_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="respondent_token" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-6">
+        <createTable tableName="respondent_poll_response">
+            <column autoIncrement="true" name="a_respondent_poll_response_id" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="respondent_poll_response_pkey"/>
+            </column>
+            <column name="a_respondent_id" type="INT"/>
+            <column name="a_poll_id" type="INT"/>
+            <column name="response" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-7">
+        <addUniqueConstraint columnNames="respondent_display_name" constraintName="respondent_respondent_display_name_key" tableName="respondent"/>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-8">
+        <addUniqueConstraint columnNames="respondent_email_id" constraintName="respondent_respondent_email_id_key" tableName="respondent"/>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-9">
+        <addUniqueConstraint columnNames="respondent_id" constraintName="respondent_respondent_id_key" tableName="respondent"/>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-10">
+        <addUniqueConstraint columnNames="a_respondent_id, a_poll_id" constraintName="unique_respondent_response" tableName="respondent_poll_response"/>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-11">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="poll" constraintName="poll_created_by_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="a_respondent_id" referencedTableName="respondent"/>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-12">
+        <addForeignKeyConstraint baseColumnNames="a_poll_id" baseTableName="respondent_poll_response" constraintName="respondent_poll_response_a_poll_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="a_poll_id" referencedTableName="poll"/>
+    </changeSet>
+    <changeSet author="Ameya (generated)" id="1536936215590-13">
+        <addForeignKeyConstraint baseColumnNames="a_respondent_id" baseTableName="respondent_poll_response" constraintName="respondent_poll_response_a_respondent_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="a_respondent_id" referencedTableName="respondent"/>
+    </changeSet>
+</databaseChangeLog>

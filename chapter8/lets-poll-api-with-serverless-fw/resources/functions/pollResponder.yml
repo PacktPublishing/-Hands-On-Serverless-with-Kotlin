@@ -1,0 +1,30 @@
+  pollsResponder:
+    handler: com.packt.serverless.kotlin.letspoll.handlers.PollResponder
+    environment:
+      databaseUsername: ${env:LP_DATABASE_USERNAME}
+      databasePassword: ${env:LP_DATABASE_PASSWORD}
+      databaseUrl: { Fn::GetAtt: [ "letsPollDatabase", "Endpoint.Address" ] }
+      databasePort: ${env:LP_DATABASE_PORT}
+      databaseName: ${env:LP_DATABASE_NAME}
+    events:
+      - http:
+          path: /response/
+          method: POST
+          cors: false
+          documentation:
+            summary: Responds to the poll
+            tags:
+              - Name
+            description: >
+              Records the response for a poll
+
+            requestBody:
+              description: "Request body description"
+            requestModels:
+              "application/json": "PollResponseRequest"
+
+
+            methodResponses:
+              - statusCode: '200'
+                responseModels:
+                  "application/json": "APISuccessResponseWithMessage"

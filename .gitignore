@@ -6,4 +6,5 @@
 *.zip
 *.jar
 *.DS_Store
-chapter8/
+*env
+*-backup/

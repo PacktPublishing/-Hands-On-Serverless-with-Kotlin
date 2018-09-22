@@ -1,0 +1,162 @@
+Resources:
+  letsPollVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      InstanceTenancy: default
+      Tags:
+           - Key: Name
+             Value: Lets Poll VPC
+
+  letsPollIGW:
+      Type: AWS::EC2::InternetGateway
+
+  letsPollVPCGatewayAttachment:
+      Type: AWS::EC2::VPCGatewayAttachment
+      Properties:
+        VpcId:
+          Ref: letsPollVPC
+        InternetGatewayId:
+          Ref: letsPollIGW
+
+  letsPollPublicSubnet:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId:
+          Ref: letsPollVPC
+        AvailabilityZone: ${self:provider.region}a
+        CidrBlock: 10.0.0.0/24
+        MapPublicIpOnLaunch: true
+        Tags:
+            - Key: Name
+              Value: Lets Poll VPC Public Subnet 1
+
+  letsPollPrivateSubnet1:
+       Type: AWS::EC2::Subnet
+       Properties:
+         VpcId:
+            Ref: letsPollVPC
+         CidrBlock: 10.0.1.0/24
+         AvailabilityZone: ${self:provider.region}a
+         MapPublicIpOnLaunch: false
+         Tags:
+             - Key: Name
+               Value: Lets Poll VPC Private Subnet 1
+
+  letsPollPrivateSubnet2:
+       Type: AWS::EC2::Subnet
+       Properties:
+         VpcId:
+            Ref: letsPollVPC
+         CidrBlock: 10.0.2.0/24
+         AvailabilityZone: ${self:provider.region}b
+         MapPublicIpOnLaunch: false
+         Tags:
+             - Key: Name
+               Value: Lets Poll VPC Private Subnet 2
+
+
+
+
+  letsPollVPCNatGatewayEIP:
+      Type: AWS::EC2::EIP
+      DependsOn: letsPollVPCGatewayAttachment
+      Properties:
+          Domain: vpc
+  letsPollVPCNatGateway:
+      Type: AWS::EC2::NatGateway
+      DependsOn: letsPollVPCNatGatewayEIP
+      Properties:
+          AllocationId:  { Fn::GetAtt: [ "letsPollVPCNatGatewayEIP", "AllocationId" ] }
+          SubnetId:
+            Ref: letsPollPublicSubnet
+          Tags:
+              - Key: Name
+                Value: Lets Poll VPC NAT Gateway 1
+  letsPollVPCPublicRouteTable:
+      Type: AWS::EC2::RouteTable
+      Properties:
+          VpcId:
+            Ref: letsPollVPC
+          Tags:
+              - Key: Name
+                Value: Lets Poll Public Subnet Route Table
+  letsPollVPCDefaultPublicRoute:
+      Type: AWS::EC2::Route
+      #DependsOn: letsPollVPCGatewayAttachment
+      Properties:
+        RouteTableId:
+          Ref: letsPollVPCPublicRouteTable
+        DestinationCidrBlock: 0.0.0.0/0
+        GatewayId:
+          Ref: letsPollIGW
+
+  letsPollPublicSubnet1RouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+        RouteTableId:
+          Ref: letsPollVPCPublicRouteTable
+        SubnetId:
+          Ref: letsPollPublicSubnet
+
+  letsPollPrivateRouteTable1:
+      Type: AWS::EC2::RouteTable
+      Properties:
+        VpcId:
+          Ref: letsPollVPC
+
+
+  letsPollDefaultPrivateRoute1:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: letsPollPrivateRouteTable1
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: letsPollVPCNatGateway
+
+
+  letsPollPrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: letsPollPrivateRouteTable1
+      SubnetId:
+        Ref: letsPollPrivateSubnet1
+
+  letsPollPrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: letsPollPrivateRouteTable1
+      SubnetId:
+         Ref: letsPollPrivateSubnet2
+
+  lambdaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group for Lambda
+      VpcId:
+        Ref: letsPollVPC
+      Tags:
+          - Key: Name
+            Value: Lambda Security group
+
+
+  databaseSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group for database
+      VpcId:
+        Ref: letsPollVPC
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 5432
+        ToPort: 5432
+        SourceSecurityGroupId:
+          Ref: lambdaSecurityGroup
+      Tags:
+          - Key: Name
+            Value: Database Security group
