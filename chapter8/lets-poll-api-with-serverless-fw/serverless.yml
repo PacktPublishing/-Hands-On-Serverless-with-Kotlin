@@ -13,6 +13,7 @@ frameworkVersion: ">=1.0.0 <2.0.0"
 plugins:
 - serverless-cf-vars
 - serverless-aws-documentation
+- serverless-reqvalidator-plugin
 
 provider:
   name: aws
@@ -30,6 +31,11 @@ provider:
   #  throttle:
   #    burstLimit: 200
   #   rateLimit: 100
+  authorizer:
+    name: "Lets Poll Authoriser"
+    type: COGNITO_USER_POOLS
+    id: { "Fn::GetAtt": ["CognitoUserPoolUserPool", "Arn" ] }
+    identitySource: method.request.header.Authorization
   vpc:
     securityGroupIds:
     - { Fn::GetAtt: [ "lambdaSecurityGroup", "GroupId" ] }
@@ -45,6 +51,7 @@ resources:
 - ${file(./resources/lambdaBasicExecutionPolicy.yml)}
 - ${file(./resources/lambdaVpcPolicy.yml)}
 - ${file(./resources/kms.yml)}
+- ${file(./resources/api/apiValidator.yml)}
 
 
 package:

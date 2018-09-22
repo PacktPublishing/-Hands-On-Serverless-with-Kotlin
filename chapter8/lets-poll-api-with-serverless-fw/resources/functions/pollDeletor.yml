@@ -7,28 +7,25 @@
       databasePort: ${env:LP_DATABASE_PORT}
       databaseName: ${env:LP_DATABASE_NAME}
     events:
-      - http:
-          path: /polls/{pollId}/
-          method: DELETE
-          cors: true
-          documentation:
-            summary: Deletes a Poll by Id
-            tags:
-              - Name
-            description: >
-              Deletes a Poll
-            pathParameters:
-              - name: "pollId"
-                in: "path"
-                required: true
-                type: "string"
-          #authorizerFunc:
-          #  handler: com.serverless.letspoll.handlers.PollDeletorAuthoriser
-            methodResponses:
-            - statusCode: '200'
-              responseModels:
-                "application/json": "APISuccessResponseWithMessage"
-            - statusCode: '409'
-              responseModels:
-                "application/json": "APIErrorResponseWithMessage"
-
+    - http:
+        path: /polls/{pollId}/
+        method: DELETE
+        cors: true
+        request:
+          parameters:
+            paths:
+              pollId : true
+        reqValidatorName: requestParmaterValidator
+        documentation:
+          summary: Gets a single poll by Id
+          tags:
+          - Name
+          description: >
+            Deletes a Poll
+          methodResponses:
+          - statusCode: '200'
+            responseModels:
+              "application/json": "APISuccessResponseWithMessage"
+          - statusCode: '409'
+            responseModels:
+              "application/json": "APIErrorResponseWithMessage"

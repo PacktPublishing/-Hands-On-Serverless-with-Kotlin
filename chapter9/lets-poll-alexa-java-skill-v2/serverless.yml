@@ -1,0 +1,22 @@
+service:
+  name: LetsPollAPIAlexaSkill
+
+
+
+frameworkVersion: ">=1.0.0 <2.0.0"
+
+
+provider:
+  name: aws
+  runtime: java8
+  stage: ${opt:stage,'beta'} # Set the default stage used. Default is dev
+  region: ${opt:region,'us-east-1'} # Overwrite the default region used. Default is us-east-1
+  profile: ${opt:profile,'lets-poll-default'}
+package:
+  artifact: build/distributions/hello.zip
+
+functions:
+  hello:
+    handler: com.serverless.letspoll.alexaskill.LetsPollAlexaSkillEntrypointHandler
+    events:
+        - alexaSkill: amzn1.ask.skill.840b2d12-1e5d-4d8a-8557-b2690ae0dcf8
