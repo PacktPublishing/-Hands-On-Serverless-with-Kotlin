@@ -11,7 +11,7 @@
           path: /polls/{pollId}/
           method: GET
           cors: true
-          reqValidatoName: requestParmaterValidator
+          reqValidatorName: requestParmaterValidator
           documentation:
             summary: Gets a single poll by Id
             tags:
