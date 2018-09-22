@@ -1,0 +1,9 @@
+Resources:
+  requestValidator:
+    Type: AWS::ApiGateway::RequestValidator
+    Properties:
+      Name: 'lets-poll-api-request-validator'
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ValidateRequestBody: true # true or false
+      ValidateRequestParameters: true # true or false

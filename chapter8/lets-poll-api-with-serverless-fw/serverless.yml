@@ -13,6 +13,7 @@ frameworkVersion: ">=1.0.0 <2.0.0"
 plugins:
 - serverless-cf-vars
 - serverless-aws-documentation
+- serverless-reqvalidator-plugin
 
 provider:
   name: aws
@@ -45,6 +46,7 @@ resources:
 - ${file(./resources/lambdaBasicExecutionPolicy.yml)}
 - ${file(./resources/lambdaVpcPolicy.yml)}
 - ${file(./resources/kms.yml)}
+- ${file(./resources/api/apiValidator.yml)}
 
 
 package:
