@@ -11,6 +11,11 @@
           path: /polls/{pollId}/
           method: GET
           cors: true
+          pathParameters:
+          - name: "pollId"
+            in: "path"
+            required: true
+            type: "string"
           reqValidatorName: requestParmaterValidator
           documentation:
             summary: Gets a single poll by Id
@@ -18,11 +23,6 @@
               - Name
             description: >
               Gets a Poll
-            pathParameters:
-              - name: "pollId"
-                in: "path"
-                required: true
-                type: "string"
             methodResponses:
               - statusCode: '200'
                 responseModels:

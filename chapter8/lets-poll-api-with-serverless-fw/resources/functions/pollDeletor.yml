@@ -22,8 +22,8 @@
                 in: "path"
                 required: true
                 type: "string"
-          #authorizerFunc:
-          #  handler: com.serverless.letspoll.handlers.PollDeletorAuthoriser
+          authorizerFunc:
+            handler: com.packt.serverless.kotlin.letspoll.handlers.PollDeletorAuthoriser
             methodResponses:
             - statusCode: '200'
               responseModels:
