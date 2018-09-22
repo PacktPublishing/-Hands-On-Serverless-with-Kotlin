@@ -10,7 +10,8 @@
       - http:
           path: /response/
           method: POST
-          cors: false
+          cors: true
+          reqValidatorName: requestBodyValidator
           documentation:
             summary: Responds to the poll
             tags:

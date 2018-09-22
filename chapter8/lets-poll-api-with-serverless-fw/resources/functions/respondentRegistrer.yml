@@ -11,7 +11,7 @@
           path: /respondent/
           method: POST
           cors: true
-          reqValidatorName: requestValidator
+          reqValidatorName: requestBodyValidator
           documentation:
             summary: Registers a respondent
             requestBody:

@@ -11,7 +11,7 @@
           path: /polls/
           method: POST
           cors: true
-          reqValidatorName: requestValidator
+          reqValidatorName: requestBodyValidator
           documentation:
             summary: Creates a Poll
             tags:
