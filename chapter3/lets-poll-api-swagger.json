@@ -1,9 +1,22 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "Lets Poll API with Serverless",
-    "version": "2018-09-22T11:34:38Z",
+    "description": "Some example API",
+    "version": "2018-09-22T13:01:49Z",
+    "title": "prod-lets-poll-api-with-serverless-fw"
   },
+  "host": "5fz7qar5q3.execute-api.ap-south-1.amazonaws.com",
+  "basePath": "/prod",
+  "tags": [
+    {
+      "name": "Name",
+      "description": "The first tag"
+    },
+    {
+      "name": "Tag2",
+      "description": "That other tag that we all love"
+    }
+  ],
   "schemes": [
     "https"
   ],
@@ -14,8 +27,24 @@
           "Name"
         ],
         "summary": "Migrates a database",
-        "description": "To instrument the RDS\n",
-        "responses": {}
+        "description": "To migrate the database running in a VPC\n",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/APISuccessResponseWithMessage"
+            }
+          },
+          "409": {
+            "description": "409 response",
+            "schema": {
+              "$ref": "#/definitions/APIErrorResponseWithMessage"
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -170,6 +199,14 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "pollId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "200 response",
@@ -195,10 +232,18 @@
         "tags": [
           "Name"
         ],
-        "summary": "Deletes a Poll by Id",
+        "summary": "Gets a single poll by Id",
         "description": "Deletes a Poll\n",
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "pollId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
@@ -215,33 +260,6 @@
           }
         }
       },
-      "options": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Methods": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Credentials": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Headers": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      }
     },
     "/respondent": {
       "post": {
