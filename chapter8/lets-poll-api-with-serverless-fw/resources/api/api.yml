@@ -181,7 +181,7 @@
             $ref: "{{model: PollResponseStatistics}}"
 
     -
-    name: APISuccessResponseWithMessage
+      name: APISuccessResponseWithMessage
       contentType: "application/json"
       schema:
         type: "object"
@@ -191,10 +191,10 @@
 
 
     -
-    name: APIErrorResponseWithMessage
+      name: APIErrorResponseWithMessage
       contentType: "application/json"
-        schema:
-          type: "object"
-          properties:
-            message:
-              type: "string"
+      schema:
+        type: "object"
+        properties:
+          message:
+            type: "string"

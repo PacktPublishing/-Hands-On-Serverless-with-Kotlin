@@ -28,7 +28,7 @@
                   "application/json": "PollDetails"
               - statusCode: '404'
                 responseModels:
-                  "application/json": "{{model: APIErrorResponseWithMessage}}"
+                  "application/json": "APIErrorResponseWithMessage"
               - statusCode: '409'
                 responseModels:
-                  "application/json": "{{model: APIErrorResponseWithMessage}}"
+                  "application/json": "APIErrorResponseWithMessage"

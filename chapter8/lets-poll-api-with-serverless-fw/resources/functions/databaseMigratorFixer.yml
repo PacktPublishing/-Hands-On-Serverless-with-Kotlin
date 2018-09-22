@@ -21,8 +21,8 @@ databaseMigratorFixer:
         methodResponses:
         - statusCode: '200'
           responseModels:
-            "application/json": "{{model: APISuccessResponseWithMessage}}"
+            "application/json": "APISuccessResponseWithMessage"
         - statusCode: '409'
           responseModels:
-            "application/json": "{{model: APIErrorResponseWithMessage}}"
+            "application/json": "APIErrorResponseWithMessage"
 
