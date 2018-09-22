@@ -1,12 +1,10 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "Some example API",
+    "description": "Lets Poll",
     "version": "2018-09-22T13:01:49Z",
-    "title": "prod-lets-poll-api-with-serverless-fw"
+    "title": "Lets-Poll-Serverless-API"
   },
-  "host": "5fz7qar5q3.execute-api.ap-south-1.amazonaws.com",
-  "basePath": "/prod",
   "tags": [
     {
       "name": "Name",
@@ -259,7 +257,7 @@
             }
           }
         }
-      },
+      }
     },
     "/respondent": {
       "post": {
