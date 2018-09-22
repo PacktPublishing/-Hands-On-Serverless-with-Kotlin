@@ -7,17 +7,17 @@
       databasePort: ${env:LP_DATABASE_PORT}
       databaseName: ${env:LP_DATABASE_NAME}
     events:
-      - http:
-          path: /migrations
-          method: POST
-          timeout: 60
-          cors: true
-          documentation:
-            summary: Migrates a database
-            tags:
-              - Name
-            description: >
-              To instrument the RDS
+    - http:
+        path: /migrations
+        method: POST
+        timeout: 60
+        cors: true
+        documentation:
+          summary: Migrates a database
+          tags:
+          - Name
+          description: >
+            To migrate the database running in a VPC
           methodResponses:
           - statusCode: '200'
             responseModels:

@@ -11,11 +11,10 @@
           path: /polls/{pollId}/
           method: GET
           cors: true
-          pathParameters:
-          - name: "pollId"
-            in: "path"
-            required: true
-            type: "string"
+          request:
+            parameters:
+              paths:
+                pollId : true
           reqValidatorName: requestParmaterValidator
           documentation:
             summary: Gets a single poll by Id
