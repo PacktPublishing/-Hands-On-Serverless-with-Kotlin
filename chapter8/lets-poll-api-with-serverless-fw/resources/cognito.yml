@@ -5,20 +5,4 @@
         UserPoolName: ${self:service}-user-pool-${self:provider.stage}-1
         AutoVerifiedAttributes:
           - email
-        #MfaConfiguration: "OFF"
-        #Schema:
-        #  - Name: name
-        #    AttributeDataType: String
-        #    Mutable: true
-        #    Required: false
-        #  - Name: email
-        #    AttributeDataType: String
-        #    Mutable: false
-        #    Required: false
-        #  - Name: phone_number
-        #    AttributeDataType: String
-        #    Mutable: false
-        #    Required: false
-        #  - Name: slackId
-        #    AttributeDataType: String
-        #    Mutable: false
+    
