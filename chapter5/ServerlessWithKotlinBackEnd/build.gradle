@@ -1,0 +1,21 @@
+plugins {
+    id 'kotlin2js' version '1.2.51'
+}
+
+group 'ServerlessWithKotlinBackEnd'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js"
+    testCompile "org.jetbrains.kotlin:kotlin-test-js"
+}
+
+compileKotlin2Js {
+    kotlinOptions.moduleKind = "commonjs"
+    kotlinOptions.outputFile = "functions/index.js"
+    kotlinOptions.sourceMap = true
+}
