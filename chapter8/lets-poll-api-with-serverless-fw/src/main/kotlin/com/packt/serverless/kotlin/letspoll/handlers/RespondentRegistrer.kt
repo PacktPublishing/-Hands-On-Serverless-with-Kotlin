@@ -13,6 +13,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.packt.serverless.kotlin.letspoll.models.generated.Tables
+import com.packt.serverless.kotlin.letspoll.models.generated.tables.Respondent
 import com.packt.serverless.kotlin.letspoll.models.generated.tables.records.RespondentRecord
 import com.packt.serverless.kotlin.letspoll.models.responses.APIErrorMessage
 import com.packt.serverless.kotlin.letspoll.models.responses.PollsResponse
@@ -50,9 +51,20 @@ class RespondentRegistrer : RequestHandler<Map<String, Any>, ApiGatewayResponse>
                             respondentRegisterationRequest.displayName).execute()
         } catch (e: Exception) {
             LOG.error("error occured while registrering the respondent",e.printStackTrace())
+            val respondentRecord = dslContext!!.fetchOne(Respondent.RESPONDENT,
+                            Respondent.RESPONDENT.RESPONDENT_EMAIL_ID
+                                    .eq(respondentRegisterationRequest.emailId))
+
+            if(respondentRecord == null){
+                LOG.error("duplicate respondentId detected.Will return the same RID");
+                return ApiGatewayResponse.build {
+                    statusCode = 409
+                    objectBody = APIErrorMessage("Could not register the respondent")
+                }
+            }
             return ApiGatewayResponse.build {
-                statusCode = 409
-                objectBody = APIErrorMessage("Duplicate Respondent Id")
+                statusCode = 200
+                objectBody = RespondentRegistrationResponse(respondentRecord.respondentId)
             }
         }
 
