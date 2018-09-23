@@ -3,6 +3,6 @@
       Type: "AWS::Cognito::UserPool"
       Properties:
         UserPoolName: ${self:service}-user-pool-${self:provider.stage}-1
-        AutoVerifiedAttributes:
-          - email
-    
+        #AutoVerifiedAttributes:
+        #  - email
+
