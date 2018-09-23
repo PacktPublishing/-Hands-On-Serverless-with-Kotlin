@@ -48,7 +48,7 @@ class PollDeletor : RequestHandler<Map<String, Any?>, ApiGatewayResponse> {
 
         return ApiGatewayResponse.build {
             statusCode = 200
-            objectBody = APISuccessResponse("Successfully responded to the poll")
+            objectBody = APISuccessResponse("Successfully deleted the poll")
         }
 
     }

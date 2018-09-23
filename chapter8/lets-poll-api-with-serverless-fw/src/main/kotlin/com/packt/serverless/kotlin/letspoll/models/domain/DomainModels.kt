@@ -12,7 +12,7 @@ enum class PollResponseOptions(val option: String) {
 
 }
 
-data class Poll (val pollId: String,val pollTitle :String,val pollQuestion:String/*, val pollOptions:List<PollResponseOptions> = Arrays.asList<PollResponseOptions>(PollResponseOptions.YES, PollResponseOptions.NO)*/) : Response()
+data class Poll (val pollId: String,val pollTitle :String,val pollQuestion:String) : Response()
 
 data class PollResponseStatistis(val response: String, val count: Int)
 

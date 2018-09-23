@@ -11,6 +11,7 @@
         path: /polls/{pollId}/
         method: DELETE
         cors: true
+        private: true
         request:
           parameters:
             paths:
