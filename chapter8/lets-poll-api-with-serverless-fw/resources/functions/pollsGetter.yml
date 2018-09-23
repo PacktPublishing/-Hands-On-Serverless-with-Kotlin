@@ -11,6 +11,7 @@
           path: /polls/
           method: get
           cors: true
+          private: true
           documentation:
             summary: Gets all Polls
             tags:

@@ -11,6 +11,7 @@
           path: /response/
           method: POST
           cors: true
+          private: true
           reqValidatorName: requestBodyValidator
           documentation:
             summary: Responds to the poll

@@ -11,6 +11,7 @@
           path: /polls/
           method: POST
           cors: true
+          private: true
           #authorizer:
           #  name: authorizer
           #  arn: { "Fn::GetAtt": ["CognitoUserPoolUserPool", "Arn" ] }

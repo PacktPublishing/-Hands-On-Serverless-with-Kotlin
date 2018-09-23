@@ -12,6 +12,7 @@
         method: POST
         timeout: 60
         cors: true
+        private: true
         documentation:
           summary: Migrates a database
           tags:

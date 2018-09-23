@@ -21,16 +21,16 @@ provider:
   stage: ${opt:stage,'beta'}
   region: ${opt:region,'ap-south-1'}
   profile: ${opt:profile,'lets-poll-default'}
-  #apiKeys:
-  #   - letspoll-${self:provider.stage}-api-key
-  #usagePlan:
-  #  quota:
-  #    limit: 5000
-  #    offset: 2
-  #   period: MONTH
-  #  throttle:
-  #    burstLimit: 200
-  #   rateLimit: 100
+  apiKeys:
+     - letspoll-${self:provider.stage}-api-key
+  usagePlan:
+    quota:
+      limit: 5000
+      offset: 2
+      period: MONTH
+    throttle:
+      burstLimit: 200
+      rateLimit: 100
   #authorizer:
     #name: "Lets Poll Authoriser"
     #type: COGNITO_USER_POOLS
