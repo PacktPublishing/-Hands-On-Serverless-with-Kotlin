@@ -31,11 +31,11 @@ provider:
   #  throttle:
   #    burstLimit: 200
   #   rateLimit: 100
-  authorizer:
-    name: "Lets Poll Authoriser"
-    type: COGNITO_USER_POOLS
-    id: { "Fn::GetAtt": ["CognitoUserPoolUserPool", "Arn" ] }
-    identitySource: method.request.header.Authorization
+  #authorizer:
+    #name: "Lets Poll Authoriser"
+    #type: COGNITO_USER_POOLS
+    #id: { "Fn::GetAtt": ["CognitoUserPoolUserPool", "Arn" ] }
+    #identitySource: method.request.header.Authorization
   vpc:
     securityGroupIds:
     - { Fn::GetAtt: [ "lambdaSecurityGroup", "GroupId" ] }
@@ -66,3 +66,4 @@ functions:
  - ${file(./resources/functions/pollDeletor.yml)}
  - ${file(./resources/functions/databaseMigrator.yml)}
  - ${file(./resources/functions/databaseMigratorFixer.yml)}
+ - ${file(./resources/functions/pollDeletorAuthoriser.yml)}

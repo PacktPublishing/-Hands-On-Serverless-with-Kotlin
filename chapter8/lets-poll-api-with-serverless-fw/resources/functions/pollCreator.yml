@@ -11,6 +11,9 @@
           path: /polls/
           method: POST
           cors: true
+          #authorizer:
+          #  name: authorizer
+          #  arn: { "Fn::GetAtt": ["CognitoUserPoolUserPool", "Arn" ] }
           reqValidatorName: requestBodyValidator
           documentation:
             summary: Creates a Poll
